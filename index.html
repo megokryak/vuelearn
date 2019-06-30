@@ -3,8 +3,45 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Vue Learn</title>
+	<script src="https://unpkg.com/vue"></script>
 </head>
 <body>
-	
+	<div id="app">
+		<h1> {{ title }}</h1>
+		<div class="notes">
+			<div class="note" v-for="(note, index) in notes" :key="index">
+				<div class="note-header">
+					<p>{{ note.title }}</p>
+					<p>{{ note.descr }}</p>
+					<span>{{ note.date }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var app = new Vue ({
+			el: '#app',
+			data: {
+				title: 'Notes app',
+				notes: [
+					{
+						title: 'First note',
+						descr: 'Description for first note',
+						date: new Date(Date.now()).toLocaleString()
+					},
+					{
+						title: 'Second note',
+						descr: 'Description for second note',
+						date: new Date(Date.now()).toLocaleString()
+					},
+					{
+						title: 'Third note',
+						descr: 'Description for third note',
+						date: new Date(Date.now()).toLocaleString()
+					}
+				]
+			}
+		});
+	</script>
 </body>
 </html>
