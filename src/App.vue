@@ -4,24 +4,16 @@
       <section>
         <div class="container">
           <h1> {{ title }}</h1>
-          <div class="message" v-if="message">
-            <p>{{ message }}</p>
-          </div>
-          <div class="new-note">
-            <input v-model="note.title" type="text">
-            <textarea v-model="note.descr"></textarea>
-            <button @click ="addNote">Add note</button>
-          </div>
+          <message v-if="message" :message="message"></message>  <!--если мы хотим передать из date значение message, то необходимо байнить (:) -->
+          <newNote
+            :note="note"
+            v-on:addNoteFromChild="addNote"
+          />
           <!-- notes list -->
-          <div class="notes">
-            <div class="note" v-for="(note, index) in notes" :key="index">
-              <div class="note-header">
-                <p>{{ note.title }}</p>
-                <p>{{ note.descr }}</p>
-                <span>{{ note.date }}</span>
-              </div>
-            </div>
-          </div>
+          <notes
+          :notes="notes"
+          v-on:remove="removeNote"
+          />
         </div>
       </section>
     </div>
@@ -29,7 +21,13 @@
 </template>
 
 <script>
+import message from '@/components/Message.vue';
+import newNote from '@/components/NewNode.vue';
+import notes from '@/components/Notes.vue';
 export default {
+  components: {
+    message, newNote, notes
+  },
   data () {
     return {
       title: 'Notes app',
@@ -73,10 +71,10 @@ export default {
       this.message = null;
       this.note.title ='';
       this.note.descr = '';
+    },
+    removeNote(index) {
+      this.notes.splice(index, 1);
     }
   }
-}
+};
 </script>
-
-<style>
-</style>
